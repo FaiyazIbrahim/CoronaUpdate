@@ -65,23 +65,47 @@ class _MyAppState extends State<MyApp> {
           title: Text('Covid-19 Alert'),
           backgroundColor: Color.fromARGB(100, 50, 62, 45),
         ),
-        body: Column(
-          children: <Widget>[
-            FutureBuilder<Album>(
-              future: futureAlbum,
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  return Text(snapshot.data.death.toString());
-                }
-                if (snapshot.hasError) {
-                  return Text("${snapshot.error}");
-                }
-                // By default, show a loading spinner.
-                return CircularProgressIndicator();
-              },
-            ),
-          ],
+        body: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: FutureBuilder<Album>(
+            future: futureAlbum,
+            builder: (context, snapshot) {
+              Text("dzsvsvdsv");
+
+              if (snapshot.hasData) {
+                return Text(
+                  snapshot.data.death.toString(),
+                  style: TextStyle(fontSize: 20),
+                );
+              }
+              if (snapshot.hasError) {
+                return Text("${snapshot.error}");
+              }
+              // By default, show a loading spinner.
+              return CircularProgressIndicator();
+            },
+          ),
         ),
+        // body: Center(
+        //   child: FutureBuilder<Album>(
+        //     future: futureAlbum,
+        //     builder: (context, snapshot) {
+        //       Text("dzsvsvdsv");
+
+        //       if (snapshot.hasData) {
+        //         return Text(
+        //           snapshot.data.death.toString(),
+        //           style: TextStyle(fontSize: 20),
+        //         );
+        //       }
+        //       if (snapshot.hasError) {
+        //         return Text("${snapshot.error}");
+        //       }
+        //       // By default, show a loading spinner.
+        //       return CircularProgressIndicator();
+        //     },
+        //   ),
+        // ),
       ),
     );
   }
