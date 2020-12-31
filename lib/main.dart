@@ -66,15 +66,14 @@ class _MyAppState extends State<MyApp> {
           backgroundColor: Color.fromARGB(100, 50, 62, 45),
         ),
         body: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.only(
+              top: 200, bottom: 20, left: 152, right: 150),
           child: FutureBuilder<Album>(
             future: futureAlbum,
             builder: (context, snapshot) {
-              Text("dzsvsvdsv");
-
               if (snapshot.hasData) {
                 return Text(
-                  snapshot.data.death.toString(),
+                  snapshot.data.cases.toString(),
                   style: TextStyle(fontSize: 20),
                 );
               }
@@ -82,6 +81,7 @@ class _MyAppState extends State<MyApp> {
                 return Text("${snapshot.error}");
               }
               // By default, show a loading spinner.
+
               return CircularProgressIndicator();
             },
           ),
