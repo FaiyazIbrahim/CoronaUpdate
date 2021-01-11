@@ -63,29 +63,9 @@ class _MyHomePageState extends State<MyHomePage> {
         appBar: AppBar(
           title: Text(widget.title),
         ),
-          padding: const EdgeInsets.only(
-              top: 200, bottom: 20, left: 152, right: 150),
+        body: Center(
+          child: Text(total_confirmed.toString()),
         ),
-        // body: Center(
-        //   child: FutureBuilder<Album>(
-        //     future: futureAlbum,
-        //     builder: (context, snapshot) {
-        //       Text("dzsvsvdsv");
-
-        //       if (snapshot.hasData) {
-        //         return Text(
-        //           snapshot.data.death.toString(),
-        //           style: TextStyle(fontSize: 20),
-        //         );
-        //       }
-        //       if (snapshot.hasError) {
-        //         return Text("${snapshot.error}");
-        //       }
-        //       // By default, show a loading spinner.
-        //       return CircularProgressIndicator();
-        //     },
-        //   ),
-        // ),
         floatingActionButton: FloatingActionButton(
           onPressed: makeReq,
           child: Icon(Icons.replay),
