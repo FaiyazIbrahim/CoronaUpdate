@@ -4,51 +4,65 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-Future<int> fetchData() async {
-  String url = 'https://api.covid19api.com/summary';
-  var response = await http
-      .get(Uri.encodeFull(url), headers: {"Accept": "application/json"});
-  print(response.body);
-  var extract = json.decode(response.body);
-  extract.toString();
-  //var data;
-  //data = extract["Message"];
-  //print(extract["Message"]);
-  print(extract["Message"]["Global"]["TotalConfirmed"]);
+var total_recovered;
+var total_deaths;
+var total_confirmed;
+
+void main() {
+  runApp(MyApp());
 }
 
-void main() => runApp(MyApp());
-
-class MyApp extends StatefulWidget {
-  MyApp({Key key}) : super(key: key);
-
+class MyApp extends StatelessWidget {
+  // This widget is the root of your application.
   @override
-  _MyAppState createState() => _MyAppState();
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'corona',
+      theme: ThemeData(
+        primarySwatch: Colors.primaryBlack,
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+      ),
+      home: MyHomePage(title: 'corona update'),
+    );
+  }
 }
 
-class _MyAppState extends State<MyApp> {
+class MyHomePage extends StatefulWidget {
+  MyHomePage({Key key, this.title}) : super(key: key);
+
+  final String title;
+
   @override
-  void initState() {
-    super.initState();
-    //futureAlbum = fetchData();
+  _MyHomePageState createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  //String url = "https://api.covid19api.com/summary";
+  String url = "https://api.covid19api.com/summary";
+
+  Future<String> makeReq() async {
+    var response = await http
+        .get(Uri.encodeFull(url), headers: {"Accept": "application/json"});
+
+    //print(response.body);
+    var extractData = jsonDecode(response.body);
+    //print(response.body);
+
+    //print(extractData["Global"]["TotalConfirmed"]);
+    //print(extractData["Global"]["TotalDeaths"]);
+    //print(extractData["Global"]["TotalRecovered"]);
+    total_recovered = extractData["Global"]["TotalRecovered"];
+    total_confirmed = extractData["Global"]["TotalConfirmed"];
+    total_deaths = extractData["Global"]["TotalDeaths"];
+    print(total_recovered);
   }
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Covid-19 Alert',
-      theme: ThemeData(
-        primarySwatch: Colors.primaryBlack,
-      ),
-      home: Scaffold(
+    return Scaffold(
         appBar: AppBar(
-          title: Text('Covid-19 Alert'),
-          backgroundColor: Color.fromARGB(100, 50, 62, 45),
+          title: Text(widget.title),
         ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: fetchData,
-        ),
-        body: Padding(
           padding: const EdgeInsets.only(
               top: 200, bottom: 20, left: 152, right: 150),
         ),
@@ -72,7 +86,10 @@ class _MyAppState extends State<MyApp> {
         //     },
         //   ),
         // ),
-      ),
-    );
+        floatingActionButton: FloatingActionButton(
+          onPressed: makeReq,
+          child: Icon(Icons.replay),
+          backgroundColor: Colors.black,
+        ));
   }
 }
